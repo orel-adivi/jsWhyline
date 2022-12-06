@@ -1,12 +1,16 @@
 {
-  "name": "test_acorn",
+  "name": "whyline-js",
   "version": "1.0.0",
-  "description": "",
-  "main": "function_instrumenter.js",
+  "description": "instrumentation tool for JavaScript",
+  "main": "index.js",
   "scripts": {
-    "go": "node function_instrumenter.js",
-	"output": "node example_output.js"
+    "instrument_functions_basic": "node ./function_instrumenter.js",
+    "instrument_functions_try_finally": "node ./function_instrumenter_try_finally.js",
+    "instrument_functions_full": "node ./function_instrumenter_full.js",
+    "output": "node ./assets/example_output.js",
+    "run": "node ./function_instrumenter_full.js && node ./assets/example_output.js"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
