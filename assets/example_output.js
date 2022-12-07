@@ -1,4 +1,4 @@
-const node_supported = false;
+const node_supported = typeof process != 'undefined';
 
 class logger {
     constructor(input, log = null) {
@@ -53,25 +53,27 @@ class logger {
     }
 
     print_location(offset) {
-        const fs = require('fs');
-        const content = fs.readFileSync(this.input, 'utf8');
-        const lines = content.split(/\r\n|\r|\n/);
+        if (node_supported) {
+            const fs = require('fs');
+            const content = fs.readFileSync(this.input, 'utf8');
+            const lines = content.split(/\r\n|\r|\n/);
 
-        const before_content = content.substring(0, offset);
-        const before_lines = before_content.split(/\r\n|\r|\n/);
-        const line = before_lines.length;
-        const line_offset = before_lines[before_lines.length - 1].length;
+            const before_content = content.substring(0, offset);
+            const before_lines = before_content.split(/\r\n|\r|\n/);
+            const line = before_lines.length;
+            const line_offset = before_lines[before_lines.length - 1].length;
 
-        this.log(`++++++++++`);
-        if(line > 1) {
-            this.log(`++ ${this.pad_line(line - 1)} ++ ${lines[line - 2]}`);
+            this.log(`++++++++++`);
+            if (line > 1) {
+                this.log(`++ ${this.pad_line(line - 1)} ++ ${lines[line - 2]}`);
+            }
+            this.log(`++ ${this.pad_line(line)} ++ ${lines[line - 1]}`);
+            this.log(`++ HERE ++ ${line_offset > 0 ? (this.pad_line('', line_offset - 1, '-') + ' ') : ''}^`);
+            if (line < lines.length - 1) {
+                this.log(`++ ${this.pad_line(line + 1)} ++ ${lines[line]}`);
+            }
+            this.log(`++++++++++\n`);
         }
-        this.log(`++ ${this.pad_line(line)} ++ ${lines[line - 1]}`);
-        this.log(`++ HERE ++ ${line_offset > 0 ? (this.pad_line('', line_offset - 1, '-') + ' ') : ''}^`);
-        if(line < lines.length - 1) {
-            this.log(`++ ${this.pad_line(line + 1)} ++ ${lines[line]}`);
-        }
-        this.log(`++++++++++\n`);
     }
 
     enter_function(name, offset) {
@@ -95,13 +97,14 @@ class logger {
 let Logger = new logger('./assets/example_input.js');
 
 // require("browser-or-node").isBrowser
-/* if(!node_supported) {
+if(!node_supported) {
     const targetNode = document.getElementsByTagName("html")[0];
     const config = { attributes: true, childList: true, subtree: true };
 
     const observer = new MutationObserver((mutationList, observer) => {
         for (const mutation of mutationList) {
             if (mutation.type === 'childList') {
+                console.log(mutation)
                 Logger.document_event('A child node has been added or removed.');
             } else if (mutation.type === 'attributes') {
                 Logger.document_event(`The ${mutation.attributeName} attribute was modified.`);
@@ -110,7 +113,7 @@ let Logger = new logger('./assets/example_input.js');
     });
 
     observer.observe(targetNode, config);
-} */
+}
 
 const a = 5;
 function not_called(param) {
