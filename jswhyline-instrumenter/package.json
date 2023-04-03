@@ -31,7 +31,6 @@
   },
   "dependencies": {
     "acorn": "^8.8.2",
-    "acorn-walk": "^8.2.0",
     "browser-or-node": "^2.1.1",
     "commander": "^10.0.0",
     "earl": "^1.0.0",

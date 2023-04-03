@@ -1,4 +1,4 @@
-const a = 5;
+/*const a = 5;
 
 function not_called(param) {
     const b = 6;
@@ -33,3 +33,4 @@ let f = 11;
 called(12);
 
 Logger.print_events();
+*/

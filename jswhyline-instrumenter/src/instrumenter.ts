@@ -3,13 +3,26 @@
  *  @author : Orel Adivi
  *  @date : 04 April 2023
  */
-import { parse } from 'acorn';
-import { full } from 'acorn-walk';
+import { parse, Node } from 'acorn';
 import { generate } from 'escodegen';
 
 import { traverse_folder, read_file, write_file } from './files'
 
 
+
+
+
+export function instrument_node(node: Node) {
+	switch(node.type) {
+		case 'Program':
+			break;
+		case 'FunctionDeclaration':
+			break
+		default:
+			break;
+	}
+
+}
 
 export function instrument_file(input: string, output: string): void {
     const content: string = read_file(input);
@@ -17,7 +30,7 @@ export function instrument_file(input: string, output: string): void {
         ecmaVersion: 6,
         ranges: true,
     });
-
+	instrument_node(ast);
     const code: string = generate(ast);
     write_file(output, code);
 }
