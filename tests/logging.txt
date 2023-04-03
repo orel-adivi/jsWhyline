@@ -1,0 +1,17 @@
+----- Logger is run -----
+
+Entered function 'called':
++++++++++
+++ 0007 ++ 
+++ 0008 ++ 
+++ HERE ++ 
+++ 0009 ++     const d = 8
++++++++++
+
+Exited function 'called' with an explicit return of value 9:
++++++++++
+++ 0012 ++ 
+++ 0013 ++ 
+++ HERE ++ 
+++ 0014 ++     return 'a'
++++++++++
