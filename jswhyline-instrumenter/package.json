@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npx tsc",
     "instrument": "node .build/runner.js --input ../tests/ --output ../tests/.build/",
-    "output": "node ../tests/.build/output.js",
+    "output": "node ../tests/.build/code.js",
     "run": "npm run build && npm run instrument",
     "nw": "nw ."
   },
