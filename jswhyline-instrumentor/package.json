@@ -1,0 +1,35 @@
+{
+  "name": "jswhyline-instrumentor",
+  "version": "1.0.0",
+  "description": "Debugging event listeners in frontend JavaScript.",
+  "main": "index.js",
+  "scripts": {
+    "instrument_functions": "node function_instrumenter.js",
+    "output": "node ./assets/example_output.js",
+    "run": "node function_instrumenter.js && node ./assets/example_output.js",
+    "nw": "nw ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/orel-adivi/jsWhyline.git"
+  },
+  "keywords": [
+    "javascript",
+    "instrumentation"
+  ],
+  "author": "Orel Adivi and Shachar Itzhaky",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/orel-adivi/jsWhyline/issues"
+  },
+  "homepage": "https://github.com/orel-adivi/jsWhyline#readme",
+  "devDependencies": {
+    "typescript": "^5.0.3"
+  },
+  "dependencies": {
+    "acorn": "^8.8.2",
+    "acorn-walk": "^8.2.0",
+    "browser-or-node": "^2.1.1",
+    "escodegen": "^2.0.0"
+  }
+}

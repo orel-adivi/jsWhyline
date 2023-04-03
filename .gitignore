@@ -105,3 +105,6 @@ dist
 
 # Webstorm enviroment
 .idea
+
+# TypeScript Support
+.build
