@@ -1,5 +1,5 @@
 {
-  "name": "jswhyline-instrumentor",
+  "name": "jswhyline-instrumenter",
   "version": "1.0.0",
   "description": "Debugging event listeners in frontend JavaScript.",
   "main": "index.js",
