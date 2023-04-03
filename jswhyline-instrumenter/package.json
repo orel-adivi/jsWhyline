@@ -4,9 +4,10 @@
   "description": "Debugging event listeners in frontend JavaScript.",
   "main": "index.js",
   "scripts": {
-    "instrument_functions": "node function_instrumenter.js",
-    "output": "node ./assets/example_output.js",
-    "run": "node function_instrumenter.js && node ./assets/example_output.js",
+    "build": "npx tsc",
+    "instrument": "node .build/runner.js --input ../tests/input.js --output ../tests/.build/output.js",
+    "output": "node ../tests/.build/output.js",
+    "run": "npm run build && npm run instrument",
     "nw": "nw ."
   },
   "repository": {
@@ -24,12 +25,15 @@
   },
   "homepage": "https://github.com/orel-adivi/jsWhyline#readme",
   "devDependencies": {
+    "@types/node": "^18.15.11",
     "typescript": "^5.0.3"
   },
   "dependencies": {
     "acorn": "^8.8.2",
     "acorn-walk": "^8.2.0",
     "browser-or-node": "^2.1.1",
+    "commander": "^10.0.0",
+    "earl": "^1.0.0",
     "escodegen": "^2.0.0"
   }
 }
