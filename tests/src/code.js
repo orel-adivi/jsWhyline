@@ -1,4 +1,8 @@
-/*const a = 5;
+
+
+
+
+const a = 5;
 
 function not_called(param) {
     const b = 6;
@@ -11,7 +15,7 @@ function not_called(param) {
         return 3;
     }
 }
-
+/*
 function called(param) {
     const d = 8;
     not_called(1);

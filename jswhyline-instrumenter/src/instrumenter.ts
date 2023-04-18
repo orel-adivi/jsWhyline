@@ -1,7 +1,7 @@
 /**
  *  @file : instrumenter.ts
  *  @author : Orel Adivi
- *  @date : 04 April 2023
+ *  @date : 18 April 2023
  */
 import { parse, Node } from 'acorn';
 import { generate } from 'escodegen';
@@ -9,17 +9,95 @@ import { generate } from 'escodegen';
 import { traverse_folder, read_file, write_file } from './files'
 
 
+type has_body = {
+	body: object[];
+}
+
+type has_consequent = {
+	consequent: Node;
+}
+
+type has_consequent_list = {
+	consequent_list: object[];
+}
+
+type has_alternate = {
+    alternate: Node | null;
+}
+
+type has_cases = {
+	cases: Node[];
+}
 
 
+export function instrument_try_catch(node: Node, context?: object[], index?: number): void {
+	// todo
+}
 
-export function instrument_node(node: Node) {
+export function instrument_function(node: Node, context?: object[], index?: number): void {
+	// todo
+}
+
+export function instrument_body(context: object[]): void {
+	for(let i: number = context.length; i >= 0; i--) {
+		instrument_node(context[i] as Node, context, i);
+	}
+}
+
+// See https://github.com/estree/estree/blob/master/es5.md for documentation
+export function instrument_node(node: Node, context?: object[], index?: number): void {
 	switch(node.type) {
+
+		// --- Nodes with 'body' ---
+		// Note: 'FunctionBody' is treated differently
 		case 'Program':
+		case 'BlockStatement':
+		case 'WithStatement':
+			instrument_body((<unknown>node as has_body).body)
 			break;
-		case 'FunctionDeclaration':
+		
+		// --- Flow-Changing Statements ---
+		case 'ReturnStatement':
+			// todo
+		case 'BreakStatement':
+			// todo
+		case 'ContinueStatement':
+			// todo
+		case 'ThrowStatement':
+			// todo
+			break;
+		
+		// --- Control Flow ---
+		case 'IfStatement':
+			instrument_node((<unknown>node as has_consequent).consequent, context, index);
+			if((<unknown>node as has_alternate).alternate !== null) {
+				instrument_node((<unknown>node as has_alternate).alternate!, context, index);
+			}
+			break;
+		case 'SwitchStatement':
+			for(const element of (<unknown>node as has_cases).cases) {
+				instrument_node(element, context, index);
+			}
+			break;
+		case 'SwitchCase':
+			instrument_body((<unknown>node as has_consequent_list).consequent_list);
+			break;
+		
+		// --- Loops ---
+		case 'WhileStatement':
+		case 'DoWhileStatement':
+		case 'ForStatement':
+		case 'ForInStatement':
+			// todo
 			break
-		default:
-			break;
+		
+		// --- Functions: ---
+		case 'FunctionDeclaration':
+			// todo
+			break
+		case 'FunctionExpression':
+			// todo
+			break
 	}
 
 }
@@ -31,6 +109,7 @@ export function instrument_file(input: string, output: string): void {
         ranges: true,
     });
 	instrument_node(ast);
+	console.log(ast);
     const code: string = generate(ast);
     write_file(output, code);
 }
